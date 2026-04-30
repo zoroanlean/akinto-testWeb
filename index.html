@@ -18,32 +18,38 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
 
         .game-container {
             background: white;
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             text-align: center;
+            max-width: 500px;
+            width: 100%;
         }
 
         h1 {
             color: #764ba2;
-            margin-bottom: 20px;
-            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-size: 2em;
         }
 
         .difficulty-select {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .difficulty-btn {
-            padding: 10px 20px;
-            margin: 0 5px;
+            padding: 8px 16px;
             border: none;
             border-radius: 25px;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
@@ -63,34 +69,76 @@
         }
 
         .difficulty-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .difficulty-btn.active {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px currentColor;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .moves-counter, .timer {
+            font-size: 1.1em;
+            color: #764ba2;
+            padding: 5px 15px;
+            background: #f0e6ff;
+            border-radius: 15px;
         }
 
         canvas {
             border: 3px solid #764ba2;
             border-radius: 10px;
-            background: #f0f0f0;
-            margin: 20px 0;
-        }
-
-        .timer {
-            font-size: 1.5em;
-            color: #764ba2;
+            background: #fafafa;
             margin: 10px 0;
-            font-weight: bold;
+            max-width: 100%;
+            height: auto;
         }
 
         .controls {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .direction-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 5px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .dir-btn {
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dir-btn:hover {
+            background: #667eea;
+            transform: scale(1.05);
+        }
+
+        .dir-btn:active {
+            transform: scale(0.95);
         }
 
         .control-btn {
@@ -100,13 +148,17 @@
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s;
         }
 
         .control-btn:hover {
             background: #667eea;
             transform: translateY(-2px);
+        }
+
+        .hint-btn {
+            background: #ff9800;
         }
 
         .modal {
@@ -116,11 +168,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.3s;
         }
 
         @keyframes fadeIn {
@@ -130,34 +182,56 @@
 
         .modal-content {
             background: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
             text-align: center;
-            max-width: 500px;
+            max-width: 450px;
+            width: 90%;
             animation: slideIn 0.5s;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         @keyframes slideIn {
-            from { transform: translateY(-100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translate(0); opacity: 1; }
         }
 
         .reward-img {
-            max-width: 300px;
+            max-width: 200px;
             border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin: 15px 0;
         }
 
         .close-btn {
-            margin-top: 20px;
-            padding: 10px 30px;
+            margin-top: 15px;
+            padding: 12px 30px;
             background: #764ba2;
             color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #667eea;
+            transform: scale(1.05);
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .sparkle-text {
+            animation: sparkle 1s infinite;
         }
     </style>
 </head>
@@ -171,20 +245,32 @@
             <button class="difficulty-btn insane-btn" onclick="setDifficulty('insane')">🤯 Insane</button>
         </div>
 
-        <canvas id="mazeCanvas" width="400" height="400"></canvas>
+        <div class="game-info">
+            <span class="moves-counter">👣 Moves: <strong id="moves">0</strong></span>
+            <span class="timer">⏱ Time: <strong id="timer">0</strong>s</span>
+        </div>
+
+        <canvas id="mazeCanvas" width="380" height="380"></canvas>
         
-        <div class="timer">⏱ Time: <span id="timer">0</span>s</div>
-        
-        <div class="controls">
-            <button class="control-btn" onclick="movePlayer('up')">⬆ Up</button>
-            <button class="control-btn" onclick="movePlayer('left')">⬅ Left</button>
-            <button class="control-btn" onclick="movePlayer('down')">⬇ Down</button>
-            <button class="control-btn" onclick="movePlayer('right')">➡ Right</button>
-            <button class="control-btn" onclick="resetGame()">🔄 Reset</button>
+        <div class="direction-pad">
+            <div></div>
+            <button class="dir-btn" onclick="movePlayer('up')">⬆️</button>
+            <div></div>
+            <button class="dir-btn" onclick="movePlayer('left')">⬅️</button>
+            <button class="dir-btn" onclick="showHint()" style="background: #ff9800; font-size: 16px;">💡</button>
+            <button class="dir-btn" onclick="movePlayer('right')">➡️</button>
+            <div></div>
+            <button class="dir-btn" onclick="movePlayer('down')">⬇️</button>
+            <div></div>
         </div>
         
-        <p style="margin-top: 20px; color: #666;">
-            📱 Use arrow keys or buttons to move the ❤️ to the ⭐
+        <div class="controls">
+            <button class="control-btn" onclick="resetGame()">🔄 New Game</button>
+            <button class="control-btn hint-btn" onclick="showHint()">💡 Hint</button>
+        </div>
+        
+        <p style="margin-top: 10px; color: #888; font-size: 0.9em;">
+            📱 Arrow keys or buttons • Reach ⭐ to win!
         </p>
     </div>
 
@@ -196,22 +282,26 @@
         const canvas = document.getElementById('mazeCanvas');
         const ctx = canvas.getContext('2d');
         const timerDisplay = document.getElementById('timer');
+        const movesDisplay = document.getElementById('moves');
         
-        let mazeSize = 10; // Default easy
+        let mazeSize = 10;
         let difficulty = 'easy';
         let maze = [];
         let playerPos = { x: 1, y: 1 };
         let goalPos = { x: 8, y: 8 };
-        let startTime;
-        let timerInterval;
+        let startTime = null;
+        let timerInterval = null;
         let gameWon = false;
+        let moves = 0;
+        let solutionPath = [];
+        let hintPath = [];
 
-        // Generate maze using recursive backtracking
+        // Generate maze with guaranteed path
         function generateMaze(size) {
             // Initialize maze with walls
             maze = Array(size).fill().map(() => Array(size).fill(1));
             
-            // Create paths
+            // Create paths using recursive backtracking
             function carve(x, y) {
                 maze[y][x] = 0;
                 
@@ -219,7 +309,7 @@
                     [0, -2], [2, 0], [0, 2], [-2, 0]
                 ];
                 
-                // Shuffle directions
+                // Shuffle directions randomly
                 for (let i = directions.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [directions[i], directions[j]] = [directions[j], directions[i]];
@@ -229,21 +319,128 @@
                     const newX = x + dx;
                     const newY = y + dy;
                     
-                    if (newX > 0 && newX < size - 1 && newY > 0 && newY < size - 1 && maze[newY][newX] === 1) {
-                        maze[y + dy/2][x + dx/2] = 0;
-                        carve(newX, newY);
+                    if (newX > 0 && newX < size - 1 && 
+                        newY > 0 && newY < size - 1 && 
+                        maze[newY][newX] === 1) {
+                        // Check if the path between is within bounds
+                        const midX = x + dx/2;
+                        const midY = y + dy/2;
+                        if (midY < size && midX < size) {
+                            maze[midY][midX] = 0;
+                            carve(newX, newY);
+                        }
                     }
                 }
             }
             
+            // Start carving from (1,1)
             carve(1, 1);
             
-            // Set start and goal
+            // Ensure start and goal positions are clear
             maze[1][1] = 0;
             maze[size-2][size-2] = 0;
             
+            // CRITICAL FIX: Ensure path from start to goal by connecting them
+            ensurePathToGoal(size);
+            
             playerPos = { x: 1, y: 1 };
             goalPos = { x: size-2, y: size-2 };
+            moves = 0;
+            movesDisplay.textContent = '0';
+            
+            // Pre-calculate solution path
+            findSolutionPath();
+        }
+
+        // Ensure there's a path to the goal
+        function ensurePathToGoal(size) {
+            // Make sure the area around goal is accessible
+            const gx = size - 2;
+            const gy = size - 2;
+            
+            // Clear goal and surrounding cells if needed
+            maze[gy][gx] = 0;
+            
+            // Ensure at least one adjacent cell is a path
+            const neighbors = [
+                [gx, gy-1], [gx+1, gy], [gx, gy+1], [gx-1, gy]
+            ];
+            
+            let hasPath = neighbors.some(([nx, ny]) => 
+                nx >= 0 && nx < size && ny >= 0 && ny < size && maze[ny][nx] === 0
+            );
+            
+            // If no adjacent path, create one
+            if (!hasPath) {
+                // Find nearest path and create a corridor
+                for (let dy = -1; dy <= 1; dy++) {
+                    for (let dx = -1; dx <= 1; dx++) {
+                        if (dx === 0 && dy === 0) continue;
+                        const nx = gx + dx;
+                        const ny = gy + dy;
+                        if (nx >= 0 && nx < size && ny >= 0 && ny < size && maze[ny][nx] === 0) {
+                            // Create path to this cell
+                            if (dx === 0) {
+                                for (let y = Math.min(gy, ny); y <= Math.max(gy, ny); y++) {
+                                    maze[y][gx] = 0;
+                                }
+                            } else if (dy === 0) {
+                                for (let x = Math.min(gx, nx); x <= Math.max(gx, nx); x++) {
+                                    maze[gy][x] = 0;
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+                // If still no path, force create one going left
+                maze[gy][gx-1] = 0;
+                maze[gy][gx-2] = 0;
+            }
+        }
+
+        // Find solution path using BFS
+        function findSolutionPath() {
+            const queue = [{ x: playerPos.x, y: playerPos.y, path: [{ x: playerPos.x, y: playerPos.y }] }];
+            const visited = new Set();
+            visited.add(`${playerPos.x},${playerPos.y}`);
+            
+            while (queue.length > 0) {
+                const current = queue.shift();
+                
+                if (current.x === goalPos.x && current.y === goalPos.y) {
+                    solutionPath = current.path;
+                    hintPath = [];
+                    // Store every 3rd point as hint
+                    for (let i = 0; i < solutionPath.length; i += Math.max(1, Math.floor(solutionPath.length / 5))) {
+                        hintPath.push(solutionPath[i]);
+                    }
+                    if (!hintPath.some(p => p.x === goalPos.x && p.y === goalPos.y)) {
+                        hintPath.push(solutionPath[solutionPath.length - 1]);
+                    }
+                    return;
+                }
+                
+                const directions = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+                for (let [dx, dy] of directions) {
+                    const newX = current.x + dx;
+                    const newY = current.y + dy;
+                    const key = `${newX},${newY}`;
+                    
+                    if (newX >= 0 && newX < mazeSize && 
+                        newY >= 0 && newY < mazeSize && 
+                        maze[newY][newX] === 0 && 
+                        !visited.has(key)) {
+                        visited.add(key);
+                        queue.push({
+                            x: newX,
+                            y: newY,
+                            path: [...current.path, { x: newX, y: newY }]
+                        });
+                    }
+                }
+            }
+            console.log("No solution found!"); // Debug
         }
 
         function drawMaze() {
@@ -251,26 +448,34 @@
             
             const cellSize = canvas.width / mazeSize;
             
-            // Draw maze
+            // Draw maze cells
             for (let y = 0; y < mazeSize; y++) {
                 for (let x = 0; x < mazeSize; x++) {
                     if (maze[y][x] === 1) {
-                        ctx.fillStyle = '#764ba2';
+                        // Wall with gradient effect
+                        const gradient = ctx.createLinearGradient(
+                            x * cellSize, y * cellSize, 
+                            (x + 1) * cellSize, (y + 1) * cellSize
+                        );
+                        gradient.addColorStop(0, '#9b6fb0');
+                        gradient.addColorStop(0.5, '#764ba2');
+                        gradient.addColorStop(1, '#5a2d82');
+                        ctx.fillStyle = gradient;
                         ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                        // Add 3D effect
-                        ctx.fillStyle = '#9b6fb0';
-                        ctx.fillRect(x * cellSize + 2, y * cellSize + 2, cellSize - 4, cellSize - 4);
-                        ctx.fillStyle = '#764ba2';
-                        ctx.fillRect(x * cellSize + 4, y * cellSize + 4, cellSize - 8, cellSize - 8);
+                        
+                        // Inner highlight
+                        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+                        ctx.fillRect(x * cellSize + 2, y * cellSize + 2, cellSize - 4, cellSize/2);
                     } else {
-                        ctx.fillStyle = '#f0f0f0';
+                        // Path
+                        ctx.fillStyle = '#fafafa';
                         ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
                     }
                 }
             }
             
             // Draw grid lines
-            ctx.strokeStyle = '#ddd';
+            ctx.strokeStyle = 'rgba(0,0,0,0.1)';
             ctx.lineWidth = 0.5;
             for (let i = 0; i <= mazeSize; i++) {
                 ctx.beginPath();
@@ -283,20 +488,56 @@
                 ctx.stroke();
             }
             
+            // Draw hint if showing
+            if (window.showingHint && hintPath.length > 0) {
+                hintPath.forEach((point, index) => {
+                    ctx.fillStyle = 'rgba(255, 152, 0, 0.3)';
+                    ctx.fillRect(point.x * cellSize, point.y * cellSize, cellSize, cellSize);
+                    ctx.fillStyle = '#ff9800';
+                    ctx.font = `${cellSize * 0.5}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('•', point.x * cellSize + cellSize/2, point.y * cellSize + cellSize/2);
+                });
+            }
+            
             // Draw goal
-            ctx.font = `${cellSize * 0.6}px Arial`;
+            const goalCenterX = goalPos.x * cellSize + cellSize/2;
+            const goalCenterY = goalPos.y * cellSize + cellSize/2;
+            
+            // Goal glow effect
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+            ctx.beginPath();
+            ctx.arc(goalCenterX, goalCenterY, cellSize * 0.6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Goal star
+            ctx.font = `${cellSize * 0.7}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText('⭐', goalPos.x * cellSize + cellSize/2, goalPos.y * cellSize + cellSize/2);
+            ctx.fillText('⭐', goalCenterX, goalCenterY);
             
             // Draw player
             if (!gameWon) {
-                ctx.fillText('❤️', playerPos.x * cellSize + cellSize/2, playerPos.y * cellSize + cellSize/2);
+                const playerCenterX = playerPos.x * cellSize + cellSize/2;
+                const playerCenterY = playerPos.y * cellSize + cellSize/2;
+                
+                // Player glow
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+                ctx.beginPath();
+                ctx.arc(playerCenterX, playerCenterY, cellSize * 0.5, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Player heart
+                ctx.font = `${cellSize * 0.7}px Arial`;
+                ctx.fillText('❤️', playerCenterX, playerCenterY);
             }
         }
 
         function movePlayer(direction) {
             if (gameWon) return;
+            
+            // Start timer on first move
             if (!startTime) {
                 startTime = Date.now();
                 timerInterval = setInterval(updateTimer, 100);
@@ -310,16 +551,44 @@
                 case 'down': newY++; break;
                 case 'left': newX--; break;
                 case 'right': newX++; break;
+                default: return;
             }
             
-            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] === 0) {
+            // Check if move is valid
+            if (newX >= 0 && newX < mazeSize && 
+                newY >= 0 && newY < mazeSize && 
+                maze[newY][newX] === 0) {
+                
                 playerPos.x = newX;
                 playerPos.y = newY;
+                moves++;
+                movesDisplay.textContent = moves;
+                
+                // Clear hint after moving
+                if (window.showingHint) {
+                    window.showingHint = false;
+                }
+                
                 drawMaze();
                 
+                // Check win condition
                 if (playerPos.x === goalPos.x && playerPos.y === goalPos.y) {
                     winGame();
                 }
+            }
+        }
+
+        function showHint() {
+            if (gameWon) return;
+            window.showingHint = !window.showingHint;
+            drawMaze();
+            
+            // Auto-hide hint after 1.5 seconds
+            if (window.showingHint) {
+                setTimeout(() => {
+                    window.showingHint = false;
+                    drawMaze();
+                }, 1500);
             }
         }
 
@@ -330,80 +599,97 @@
             const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
             
             let message;
-            let reward;
             
             switch(difficulty) {
                 case 'easy':
                     message = `
-                        <h2>🎉 Congratulations Moshi! 🎉</h2>
-                        <p style="font-size: 1.2em;">You completed the Easy maze!</p>
-                        <p style="font-size: 1.5em;">Time: ${timeElapsed}s</p>
-                        <div style="font-size: 3em; margin: 20px;">😘💋</div>
-                        <p style="font-size: 1.3em; color: #e91e63;"><strong>Your reward: A sweet kiss! 💋</strong></p>
-                        <p style="font-style: italic; margin: 10px;">
-                            "For Moshi, the most amazing person who makes my heart skip a beat! 💕"
-                        </p>
-                        <p style="color: #764ba2;">You make every moment special! 🌟</p>
+                        <h2 style="color: #4CAF50;">🎉 Yehey Moshi! 🎉</h2>
+                        <p style="font-size: 1.3em;">Easy mode cleared!</p>
+                        <div style="font-size: 4em; animation: heartBeat 0.5s infinite;">😘💋</div>
+                        <p style="font-size: 1.1em;">⏱ Time: <strong>${timeElapsed}s</strong> | 👣 Moves: <strong>${moves}</strong></p>
+                        <div style="background: #ffe0f0; padding: 15px; border-radius: 15px; margin: 15px 0;">
+                            <p style="font-size: 1.5em; color: #e91e63;">💋 Reward: Sweet Kiss!</p>
+                            <p style="font-style: italic; color: #666;">
+                                "For Moshi, you make my heart smile! Mwaaah! 💕"
+                            </p>
+                        </div>
                     `;
                     break;
                     
                 case 'hard':
                     message = `
-                        <h2>🏆 Incredible Moshi! 🏆</h2>
-                        <p style="font-size: 1.2em;">You conquered the Hard maze!</p>
-                        <p style="font-size: 1.5em;">Time: ${timeElapsed}s</p>
-                        <div style="font-size: 4em; margin: 20px;">
-                            <span style="display: inline-block; animation: bounce 0.5s infinite;">💑</span>
+                        <h2 style="color: #FF9800;">🏆 Galing Moshi! 🏆</h2>
+                        <p style="font-size: 1.3em;">Hard mode conquered!</p>
+                        <div style="font-size: 4em;">📸💑</div>
+                        <p style="font-size: 1.1em;">⏱ Time: <strong>${timeElapsed}s</strong> | 👣 Moves: <strong>${moves}</strong></p>
+                        <div style="background: linear-gradient(135deg, #ffe0b2, #ffcc80); padding: 15px; border-radius: 15px; margin: 15px 0;">
+                            <p style="font-size: 1.5em; color: #e65100;">📸 Reward: Picture Together!</p>
+                            <div style="background: white; padding: 10px; border-radius: 10px; margin: 10px 0; border: 3px dashed #ff9800;">
+                                <p style="font-size: 3em;">🖼️</p>
+                                <p style="font-style: italic;">"Every moment with Moshi is picture perfect! 📸💖"</p>
+                            </div>
                         </div>
-                        <p style="font-size: 1.3em; color: #ff6f00;"><strong>Your reward: A picture together! 📸</strong></p>
-                        <div style="background: linear-gradient(135deg, #ff6f00, #ff8f00); padding: 15px; border-radius: 10px; margin: 15px 0;">
-                            <p style="font-size: 2em;">🖼️💕</p>
-                            <p style="color: white;">Best moments captured together!</p>
-                        </div>
-                        <p style="font-style: italic;">
-                            "Every adventure with Moshi is worth remembering forever! 📸💖"
-                        </p>
                     `;
                     break;
                     
                 case 'insane':
                     message = `
-                        <h2>👑 YOU'RE A LEGEND MOSHI! 👑</h2>
-                        <p style="font-size: 1.2em;">You beat the INSANE maze!</p>
-                        <p style="font-size: 1.5em;">Time: ${timeElapsed}s</p>
-                        <div style="position: relative; display: inline-block; margin: 20px;">
-                            <img src="data:image/svg+xml,${encodeURIComponent(`
-                                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="200" height="200" fill="%23ff4081"/>
-                                    <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" font-size="80">❤️</text>
-                                </svg>
-                            `)}" alt="Special Reward" class="reward-img"/>
-                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
-                                        background: linear-gradient(45deg, gold, transparent, gold); 
-                                        animation: shimmer 2s infinite;"></div>
+                        <h2 style="color: #f44336;">👑 LEGENDARY MOSHI! 👑</h2>
+                        <p style="font-size: 1.3em;">INSANE mode beaten!</p>
+                        <div style="font-size: 4em; animation: heartBeat 0.3s infinite;">💝</div>
+                        <p style="font-size: 1.1em;">⏱ Time: <strong>${timeElapsed}s</strong> | 👣 Moves: <strong>${moves}</strong></p>
+                        <div style="background: linear-gradient(135deg, #ff4081, #7c4dff); padding: 15px; border-radius: 15px; margin: 15px 0; color: white;">
+                            <p style="font-size: 1.5em;">🌟 ULTIMATE REWARD 🌟</p>
+                            <p style="font-size: 1.2em;">My Heart & Endless Love!</p>
+                            <div style="font-size: 3em; margin: 10px 0;">💍💖✨</div>
+                            <p style="font-style: italic; font-size: 1.1em;">
+                                "For Moshi - You've unlocked my heart completely! 
+                                Ikaw lang sapat na! Forever and always! 🔐💕"
+                            </p>
+                            <p class="sparkle-text" style="font-size: 1.3em; margin-top: 10px;">
+                                ✨ You're my everything! ✨
+                            </p>
                         </div>
-                        <p style="font-size: 1.5em; color: #ff4081;">
-                            <strong>ULTIMATE REWARD: My heart & endless love! 💝</strong>
-                        </p>
-                        <p style="font-size: 1.2em; margin: 15px;">
-                            "For Moshi - The one who makes life an incredible journey! 
-                            You've unlocked my heart completely! 🔓💖"
-                        </p>
-                        <div style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
-                                    padding: 10px; border-radius: 10px; color: white; margin: 10px 0;">
-                            <p style="font-size: 1.3em;">✨ You're my everything! ✨</p>
-                        </div>
-                        <p style="color: #764ba2;">Together forever starts now! 🥰💕</p>
                     `;
                     break;
             }
             
             document.getElementById('modalContent').innerHTML = message + `
-                <button class="close-btn" onclick="closeModal()">Play Again! 🎮</button>
+                <button class="close-btn" onclick="closeModal()">🔄 Play Again!</button>
             `;
+            
+            // Show modal
             document.getElementById('winModal').style.display = 'flex';
             
+            // Confetti effect for insane mode
+            if (difficulty === 'insane') {
+                createConfetti();
+            }
+            
             drawMaze();
+        }
+
+        function createConfetti() {
+            const colors = ['#ff4081', '#ff6e40', '#ffab00', '#00e676', '#2979ff', '#d500f9'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.cssText = `
+                        position: fixed;
+                        top: -20px;
+                        left: ${Math.random() * 100}%;
+                        width: ${Math.random() * 10 + 5}px;
+                        height: ${Math.random() * 10 + 5}px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        pointer-events: none;
+                        z-index: 1001;
+                        animation: fall ${Math.random() * 2 + 2}s linear forwards;
+                        border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    `;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
         }
 
         function updateTimer() {
@@ -416,6 +702,9 @@
             clearInterval(timerInterval);
             startTime = null;
             timerDisplay.textContent = '0';
+            moves = 0;
+            movesDisplay.textContent = '0';
+            window.showingHint = false;
             
             let size;
             switch(difficulty) {
@@ -472,23 +761,31 @@
                     e.preventDefault();
                     movePlayer('right');
                     break;
+                case 'h':
+                case 'H':
+                    showHint();
+                    break;
             }
         });
 
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes bounce {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-10px); }
+        // Prevent scrolling with arrow keys
+        window.addEventListener('keydown', function(e) {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
             }
-            
-            @keyframes shimmer {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(100%); }
+        }, { passive: false });
+
+        // Add confetti animation
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                    opacity: 0;
+                }
             }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(styleSheet);
 
         // Initialize game
         generateMaze(10);
