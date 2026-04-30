@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.5">
-    <title>5th Monthsary Surprise 💖 | Pabebe Edition</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Game for Moshi 💕</title>
     <style>
         * {
             margin: 0;
@@ -12,637 +11,488 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --pink: #ff9eb5;
-            --dark-pink: #d94f70;
-            --bg-start: #2d1b3a;
-            --bg-end: #1a1025;
-            --card-bg: rgba(255, 240, 245, 0.97);
-        }
-
         body {
-            background: linear-gradient(145deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            font-family: 'Segoe UI', 'Playfair Display', Georgia, serif;
-            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 1rem;
-            overflow-x: hidden;
-            position: relative;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        /* Floating hearts background */
-        .hearts-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .heart-float {
-            position: absolute;
-            color: rgba(255, 180, 200, 0.3);
-            font-size: 2rem;
-            animation: floatHeart 7s infinite ease-in-out;
-            bottom: -50px;
-            opacity: 0;
-        }
-
-        @keyframes floatHeart {
-            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-110vh) rotate(40deg) scale(1.2); opacity: 0; }
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-3deg); }
-            75% { transform: rotate(3deg); }
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .surprise-card {
-            position: relative;
-            z-index: 10;
-            max-width: 750px;
-            width: 100%;
-            background: linear-gradient(135deg, rgba(255, 240, 245, 0.97) 0%, rgba(255, 220, 230, 0.95) 100%);
-            border-radius: clamp(1.5rem, 6vw, 3.5rem);
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(255, 200, 210, 0.6), 0 0 40px rgba(255, 120, 160, 0.7);
-            padding: clamp(1.8rem, 5vw, 2.8rem) clamp(1.2rem, 4vw, 2.2rem);
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             text-align: center;
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            transition: all 0.3s ease;
-        }
-
-        .monthsary-badge {
-            background: linear-gradient(120deg, #d94f70, #b33154);
-            color: #fff0f3;
-            display: inline-block;
-            padding: 0.6rem 2rem;
-            border-radius: 3rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 6px 14px rgba(180, 60, 90, 0.6);
-            animation: wiggle 2s infinite;
         }
 
         h1 {
-            font-family: 'Playfair Display', 'Times New Roman', serif;
-            font-size: clamp(2rem, 7vw, 3.2rem);
-            font-weight: 700;
-            color: #4a1e2f;
-            text-shadow: 2px 2px 0 rgba(255, 220, 220, 0.8);
-            margin-bottom: 0.6rem;
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 2.5em;
         }
 
-        .nickname-display {
-            color: #d94f70;
-            font-style: italic;
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            margin-bottom: 0.5rem;
-            animation: sparkle 2s infinite;
+        .difficulty-select {
+            margin-bottom: 20px;
         }
 
-        .message-box {
-            background: rgba(255, 250, 252, 0.9);
-            border-radius: 2rem;
-            padding: clamp(1rem, 3vw, 1.5rem);
-            margin: 1.2rem 0;
-            border: 2px dashed #ffb7c9;
-            box-shadow: 0 8px 20px rgba(180, 50, 70, 0.2);
-        }
-
-        .typewriter-text {
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            color: #5c2e3b;
-            line-height: 1.6;
-            min-height: 60px;
-            font-weight: 500;
-        }
-
-        .cursor::after {
-            content: '|';
-            animation: blink 1s infinite;
-            color: #d94f70;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Love quiz section */
-        .quiz-section {
-            background: #fff5f8;
-            border-radius: 2rem;
-            padding: 1.2rem;
-            margin: 1.2rem 0;
-            border: 1px solid #ffccd5;
-        }
-
-        .quiz-question {
-            font-weight: 600;
-            color: #b33c5a;
-            margin-bottom: 0.8rem;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            justify-content: center;
-        }
-
-        .quiz-btn {
-            background: white;
-            border: 2px solid #ffb7c9;
-            padding: 0.7rem 1.2rem;
-            border-radius: 2rem;
+        .difficulty-btn {
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
             cursor: pointer;
-            font-weight: 600;
-            color: #d94f70;
             transition: all 0.3s;
-            font-size: 0.9rem;
-            flex: 1 1 auto;
-            min-width: 100px;
-            touch-action: manipulation;
-        }
-
-        .quiz-btn:hover {
-            background: #ffd9e5;
-            transform: scale(1.05);
-        }
-        .quiz-btn.correct {
-            background: #ff9eb5;
-            color: white;
-            animation: bounceIn 0.6s;
-        }
-        .quiz-btn.wrong {
-            background: #ddd;
-            color: #999;
-            text-decoration: line-through;
-        }
-
-        .quiz-result {
-            margin-top: 0.8rem;
             font-weight: bold;
-            color: #b33c5a;
+        }
+
+        .easy-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .hard-btn {
+            background: #FF9800;
+            color: white;
+        }
+        .insane-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        .difficulty-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .difficulty-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        canvas {
+            border: 3px solid #764ba2;
+            border-radius: 10px;
+            background: #f0f0f0;
+            margin: 20px 0;
+        }
+
+        .timer {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 10px 20px;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .modal {
             display: none;
-            animation: bounceIn 0.6s;
-        }
-
-        /* ILY More counter */
-        .ily-counter {
-            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
             align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1.2rem 0;
-            flex-wrap: wrap;
+            z-index: 1000;
+            animation: fadeIn 0.5s;
         }
 
-        .ily-btn {
-            background: #ffeaf1;
-            border: none;
-            font-size: 1.8rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: #d94f70;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .ily-btn:active {
-            transform: scale(0.9);
-            background: #ffccd5;
-        }
-
-        .ily-display {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            font-weight: 700;
-            color: #b33c5a;
-            min-width: 120px;
-        }
-
-        /* Compliment generator */
-        .compliment-box {
-            background: linear-gradient(135deg, #fff0f3, #ffe4e9);
-            border-radius: 2rem;
-            padding: 1.2rem;
-            margin: 1.2rem 0;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            color: #b33c5a;
-            font-weight: 600;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            animation: bounceIn 0.5s;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid #ffccd5;
-            user-select: none;
-        }
-
-        .compliment-box:active {
-            transform: scale(0.97);
-        }
-
-        .surprise-btn {
-            background: linear-gradient(180deg, #e8617c 0%, #be3b58 100%);
-            border: none;
-            color: white;
-            font-weight: bold;
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            padding: 1rem 2.5rem;
-            border-radius: 3rem;
-            margin-top: 1rem;
-            cursor: pointer;
-            box-shadow: 0 7px 0 #872c44, 0 10px 18px rgba(160, 30, 60, 0.4);
-            transition: all 0.15s;
-            letter-spacing: 1px;
-            border: 1px solid #ffb2c4;
-            animation: wiggle 3s infinite;
-            touch-action: manipulation;
-        }
-
-        .surprise-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 3px 0 #631f32;
-        }
-
-        .hidden-message {
-            margin-top: 1.5rem;
-            background: #fff0f3;
-            border-radius: 2rem;
-            padding: 1.2rem;
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-            color: #ad2e4c;
-            font-weight: 600;
-            border: 2px solid #ffb7c9;
-            animation: bounceIn 0.6s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        footer {
-            margin-top: 1.2rem;
-            color: #864455;
-            font-size: clamp(0.7rem, 2vw, 0.8rem);
-        }
-
-        .nickname-input-area {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 0.8rem 0;
-        }
-
-        .nickname-input {
-            padding: 0.6rem 1rem;
-            border-radius: 2rem;
-            border: 2px solid #ffb7c9;
-            font-size: 0.9rem;
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
-            outline: none;
-            background: #fffbfc;
-            color: #5c2e3b;
-            font-weight: 500;
-            flex: 1 1 150px;
-            max-width: 200px;
+            max-width: 500px;
+            animation: slideIn 0.5s;
         }
 
-        .save-nickname-btn {
-            background: #ffb7c9;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 2rem;
-            cursor: pointer;
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .reward-img {
+            max-width: 300px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: #764ba2;
             color: white;
-            font-weight: 600;
-            background: #d94f70;
-            touch-action: manipulation;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-
-<div class="hearts-bg" id="heartsContainer"></div>
-
-<main class="surprise-card">
-    <div class="monthsary-badge">
-        <i class="fas fa-calendar-alt"></i> 5th Monthsary <i class="fas fa-heart"></i>
-    </div>
-
-    <h1>My Dearest</h1>
-    <div class="nickname-display" id="nicknameDisplay">
-        <i class="fas fa-sparkles"></i> baby <i class="fas fa-sparkles"></i>
-    </div>
-
-    <!-- Set nickname -->
-    <div class="nickname-input-area">
-        <input type="text" class="nickname-input" id="nicknameInput" placeholder="Tawag mo sakin? 🥺" maxlength="20">
-        <button class="save-nickname-btn" id="saveNicknameBtn">
-            <i class="fas fa-heart"></i> Set
-        </button>
-    </div>
-
-    <!-- Typewriter love letter -->
-    <div class="message-box">
-        <p class="typewriter-text cursor" id="typewriterText"></p>
-    </div>
-
-    <!-- Pabebe love quiz -->
-    <div class="quiz-section">
-        <p class="quiz-question" id="quizQuestion">Sino pinaka pogi/maganda sa mundo? 🤔</p>
-        <div class="quiz-options" id="quizOptions"></div>
-        <p class="quiz-result" id="quizResult"></p>
-    </div>
-
-    <!-- I love you more counter -->
-    <div class="ily-counter">
-        <button class="ily-btn" id="ilyMinus"><i class="fas fa-minus"></i></button>
-        <div class="ily-display">
-            <span id="ilyCount">1</span>x I love you more! 💕
+    <div class="game-container">
+        <h1>💖 Maze Game for Moshi 💖</h1>
+        
+        <div class="difficulty-select">
+            <button class="difficulty-btn easy-btn active" onclick="setDifficulty('easy')">😊 Easy</button>
+            <button class="difficulty-btn hard-btn" onclick="setDifficulty('hard')">😤 Hard</button>
+            <button class="difficulty-btn insane-btn" onclick="setDifficulty('insane')">🤯 Insane</button>
         </div>
-        <button class="ily-btn" id="ilyPlus"><i class="fas fa-plus"></i></button>
+
+        <canvas id="mazeCanvas" width="400" height="400"></canvas>
+        
+        <div class="timer">⏱ Time: <span id="timer">0</span>s</div>
+        
+        <div class="controls">
+            <button class="control-btn" onclick="movePlayer('up')">⬆ Up</button>
+            <button class="control-btn" onclick="movePlayer('left')">⬅ Left</button>
+            <button class="control-btn" onclick="movePlayer('down')">⬇ Down</button>
+            <button class="control-btn" onclick="movePlayer('right')">➡ Right</button>
+            <button class="control-btn" onclick="resetGame()">🔄 Reset</button>
+        </div>
+        
+        <p style="margin-top: 20px; color: #666;">
+            📱 Use arrow keys or buttons to move the ❤️ to the ⭐
+        </p>
     </div>
 
-    <!-- Random compliment -->
-    <div class="compliment-box" id="complimentBox">
-        <i class="fas fa-sparkles"></i> 
-        <span id="complimentText">Click me for kilig! 💖</span>
-        <i class="fas fa-sparkles"></i>
+    <div id="winModal" class="modal">
+        <div class="modal-content" id="modalContent"></div>
     </div>
 
-    <button class="surprise-btn" id="revealButton">
-        <i class="fas fa-gift"></i> Open Your Surprise <i class="fas fa-gift"></i>
-    </button>
+    <script>
+        const canvas = document.getElementById('mazeCanvas');
+        const ctx = canvas.getContext('2d');
+        const timerDisplay = document.getElementById('timer');
+        
+        let mazeSize = 10; // Default easy
+        let difficulty = 'easy';
+        let maze = [];
+        let playerPos = { x: 1, y: 1 };
+        let goalPos = { x: 8, y: 8 };
+        let startTime;
+        let timerInterval;
+        let gameWon = false;
 
-    <div id="specialMessage" style="display: none;" class="hidden-message">
-        <i class="fas fa-key"></i>
-        <span>You have my whole heart for my whole life. 💍✨ Happy 5th monthsary, my love!</span>
-        <i class="fas fa-key"></i>
-    </div>
-
-    <footer>
-        <i class="far fa-heart"></i> made with love & magic <i class="far fa-heart"></i>
-    </footer>
-</main>
-
-<script>
-    (function() {
-        // --- FLOATING HEARTS ---
-        const heartsContainer = document.getElementById('heartsContainer');
-        function createFloatingHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart-float';
-            const icons = ['fa-heart', 'fa-heart', 'fa-heart', 'fa-kiss-wink-heart', 'fa-heartbeat', 'fa-grin-hearts'];
-            heart.innerHTML = `<i class="fas ${icons[Math.floor(Math.random() * icons.length)]}"></i>`;
-            heart.style.left = `${Math.random() * 100}%`;
-            heart.style.fontSize = `${1.2 + Math.random() * 2.2}rem`;
-            heart.style.animationDuration = `${5 + Math.random() * 10}s`;
-            heart.style.animationDelay = `${Math.random() * 5}s`;
-            heartsContainer.appendChild(heart);
-            setTimeout(() => { if (heart.parentNode) heart.remove(); }, 16000);
-        }
-        for (let i = 0; i < 20; i++) setTimeout(createFloatingHeart, i * 150);
-        setInterval(createFloatingHeart, 800);
-
-        // --- NICKNAME SYSTEM ---
-        const nicknameDisplay = document.getElementById('nicknameDisplay');
-        const nicknameInput = document.getElementById('nicknameInput');
-        const saveNicknameBtn = document.getElementById('saveNicknameBtn');
-
-        saveNicknameBtn.addEventListener('click', () => {
-            const name = nicknameInput.value.trim();
-            if (name) {
-                nicknameDisplay.innerHTML = `<i class="fas fa-sparkles"></i> ${name} <i class="fas fa-sparkles"></i>`;
-                localStorage.setItem('babyNickname', name);
-                // Hearts burst
-                for (let i = 0; i < 6; i++) setTimeout(createFloatingHeart, i * 60);
-            }
-        });
-
-        // Load saved nickname
-        const savedName = localStorage.getItem('babyNickname');
-        if (savedName) {
-            nicknameDisplay.innerHTML = `<i class="fas fa-sparkles"></i> ${savedName} <i class="fas fa-sparkles"></i>`;
-        }
-
-        // --- TYPEWRITER EFFECT ---
-        const typewriterText = document.getElementById('typewriterText');
-        const loveMessages = [
-            "Five months ago, you walked into my life and painted it with colors I never knew existed... 💕",
-            "Every moment with you is my favorite melody, my happy pill, my everything... 🎵",
-            "Thank you for being my happiness, my calm, and my greatest adventure... ✨",
-            "You're the reason I smile for no reason. Charot! Pero true... 🥺💖",
-            "Here's to forever, starting with today. I love you so much! 💍"
-        ];
-        let messageIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function typeEffect() {
-            const currentMsg = loveMessages[messageIndex];
-            if (isDeleting) {
-                typewriterText.textContent = currentMsg.substring(0, charIndex - 1);
-                charIndex--;
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    messageIndex = (messageIndex + 1) % loveMessages.length;
-                    setTimeout(typeEffect, 500);
-                    return;
+        // Generate maze using recursive backtracking
+        function generateMaze(size) {
+            // Initialize maze with walls
+            maze = Array(size).fill().map(() => Array(size).fill(1));
+            
+            // Create paths
+            function carve(x, y) {
+                maze[y][x] = 0;
+                
+                const directions = [
+                    [0, -2], [2, 0], [0, 2], [-2, 0]
+                ];
+                
+                // Shuffle directions
+                for (let i = directions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [directions[i], directions[j]] = [directions[j], directions[i]];
                 }
-            } else {
-                typewriterText.textContent = currentMsg.substring(0, charIndex + 1);
-                charIndex++;
-                if (charIndex === currentMsg.length) {
-                    isDeleting = true;
-                    setTimeout(typeEffect, 2000);
-                    return;
+                
+                for (let [dx, dy] of directions) {
+                    const newX = x + dx;
+                    const newY = y + dy;
+                    
+                    if (newX > 0 && newX < size - 1 && newY > 0 && newY < size - 1 && maze[newY][newX] === 1) {
+                        maze[y + dy/2][x + dx/2] = 0;
+                        carve(newX, newY);
+                    }
                 }
             }
-            setTimeout(typeEffect, isDeleting ? 30 : 60);
+            
+            carve(1, 1);
+            
+            // Set start and goal
+            maze[1][1] = 0;
+            maze[size-2][size-2] = 0;
+            
+            playerPos = { x: 1, y: 1 };
+            goalPos = { x: size-2, y: size-2 };
         }
-        typeEffect();
 
-        // --- LOVE QUIZ ---
-        const quizQuestion = document.getElementById('quizQuestion');
-        const quizOptions = document.getElementById('quizOptions');
-        const quizResult = document.getElementById('quizResult');
-
-        const quizData = [
-            {
-                question: "Sino pinaka pogi/maganda sa mundo? 🤔",
-                options: ["Ikaw syempre! 😍", "Si crush...jk", "Si Mama", "Ewan ko 🤷"],
-                correct: 0
-            },
-            {
-                question: "Mahal mo ba ko? 🥺",
-                options: ["Oo naman! 💖", "Medyo lang", "Depende sa mood", "Secret 🤫"],
-                correct: 0
-            },
-            {
-                question: "Sino nagmamay-ari ng puso mo? 💘",
-                options: ["Ikaw lang!", "Si Lord", "Family ko", "Wala pa"],
-                correct: 0
+        function drawMaze() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const cellSize = canvas.width / mazeSize;
+            
+            // Draw maze
+            for (let y = 0; y < mazeSize; y++) {
+                for (let x = 0; x < mazeSize; x++) {
+                    if (maze[y][x] === 1) {
+                        ctx.fillStyle = '#764ba2';
+                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                        // Add 3D effect
+                        ctx.fillStyle = '#9b6fb0';
+                        ctx.fillRect(x * cellSize + 2, y * cellSize + 2, cellSize - 4, cellSize - 4);
+                        ctx.fillStyle = '#764ba2';
+                        ctx.fillRect(x * cellSize + 4, y * cellSize + 4, cellSize - 8, cellSize - 8);
+                    } else {
+                        ctx.fillStyle = '#f0f0f0';
+                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                    }
+                }
             }
-        ];
-        let currentQuiz = 0;
+            
+            // Draw grid lines
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= mazeSize; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * cellSize, 0);
+                ctx.lineTo(i * cellSize, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, i * cellSize);
+                ctx.lineTo(canvas.width, i * cellSize);
+                ctx.stroke();
+            }
+            
+            // Draw goal
+            ctx.font = `${cellSize * 0.6}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('⭐', goalPos.x * cellSize + cellSize/2, goalPos.y * cellSize + cellSize/2);
+            
+            // Draw player
+            if (!gameWon) {
+                ctx.fillText('❤️', playerPos.x * cellSize + cellSize/2, playerPos.y * cellSize + cellSize/2);
+            }
+        }
 
-        function loadQuiz() {
-            const quiz = quizData[currentQuiz];
-            quizQuestion.textContent = quiz.question;
-            quizOptions.innerHTML = '';
-            quizResult.style.display = 'none';
+        function movePlayer(direction) {
+            if (gameWon) return;
+            if (!startTime) {
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 100);
+            }
+            
+            let newX = playerPos.x;
+            let newY = playerPos.y;
+            
+            switch(direction) {
+                case 'up': newY--; break;
+                case 'down': newY++; break;
+                case 'left': newX--; break;
+                case 'right': newX++; break;
+            }
+            
+            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] === 0) {
+                playerPos.x = newX;
+                playerPos.y = newY;
+                drawMaze();
+                
+                if (playerPos.x === goalPos.x && playerPos.y === goalPos.y) {
+                    winGame();
+                }
+            }
+        }
 
-            quiz.options.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'quiz-btn';
-                btn.textContent = opt;
-                btn.addEventListener('click', () => checkAnswer(index, btn));
-                quizOptions.appendChild(btn);
+        function winGame() {
+            gameWon = true;
+            clearInterval(timerInterval);
+            
+            const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+            
+            let message;
+            let reward;
+            
+            switch(difficulty) {
+                case 'easy':
+                    message = `
+                        <h2>🎉 Congratulations Moshi! 🎉</h2>
+                        <p style="font-size: 1.2em;">You completed the Easy maze!</p>
+                        <p style="font-size: 1.5em;">Time: ${timeElapsed}s</p>
+                        <div style="font-size: 3em; margin: 20px;">😘💋</div>
+                        <p style="font-size: 1.3em; color: #e91e63;"><strong>Your reward: A sweet kiss! 💋</strong></p>
+                        <p style="font-style: italic; margin: 10px;">
+                            "For Moshi, the most amazing person who makes my heart skip a beat! 💕"
+                        </p>
+                        <p style="color: #764ba2;">You make every moment special! 🌟</p>
+                    `;
+                    break;
+                    
+                case 'hard':
+                    message = `
+                        <h2>🏆 Incredible Moshi! 🏆</h2>
+                        <p style="font-size: 1.2em;">You conquered the Hard maze!</p>
+                        <p style="font-size: 1.5em;">Time: ${timeElapsed}s</p>
+                        <div style="font-size: 4em; margin: 20px;">
+                            <span style="display: inline-block; animation: bounce 0.5s infinite;">💑</span>
+                        </div>
+                        <p style="font-size: 1.3em; color: #ff6f00;"><strong>Your reward: A picture together! 📸</strong></p>
+                        <div style="background: linear-gradient(135deg, #ff6f00, #ff8f00); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <p style="font-size: 2em;">🖼️💕</p>
+                            <p style="color: white;">Best moments captured together!</p>
+                        </div>
+                        <p style="font-style: italic;">
+                            "Every adventure with Moshi is worth remembering forever! 📸💖"
+                        </p>
+                    `;
+                    break;
+                    
+                case 'insane':
+                    message = `
+                        <h2>👑 YOU'RE A LEGEND MOSHI! 👑</h2>
+                        <p style="font-size: 1.2em;">You beat the INSANE maze!</p>
+                        <p style="font-size: 1.5em;">Time: ${timeElapsed}s</p>
+                        <div style="position: relative; display: inline-block; margin: 20px;">
+                            <img src="data:image/svg+xml,${encodeURIComponent(`
+                                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="200" height="200" fill="%23ff4081"/>
+                                    <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" font-size="80">❤️</text>
+                                </svg>
+                            `)}" alt="Special Reward" class="reward-img"/>
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+                                        background: linear-gradient(45deg, gold, transparent, gold); 
+                                        animation: shimmer 2s infinite;"></div>
+                        </div>
+                        <p style="font-size: 1.5em; color: #ff4081;">
+                            <strong>ULTIMATE REWARD: My heart & endless love! 💝</strong>
+                        </p>
+                        <p style="font-size: 1.2em; margin: 15px;">
+                            "For Moshi - The one who makes life an incredible journey! 
+                            You've unlocked my heart completely! 🔓💖"
+                        </p>
+                        <div style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
+                                    padding: 10px; border-radius: 10px; color: white; margin: 10px 0;">
+                            <p style="font-size: 1.3em;">✨ You're my everything! ✨</p>
+                        </div>
+                        <p style="color: #764ba2;">Together forever starts now! 🥰💕</p>
+                    `;
+                    break;
+            }
+            
+            document.getElementById('modalContent').innerHTML = message + `
+                <button class="close-btn" onclick="closeModal()">Play Again! 🎮</button>
+            `;
+            document.getElementById('winModal').style.display = 'flex';
+            
+            drawMaze();
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            timerDisplay.textContent = elapsed;
+        }
+
+        function resetGame() {
+            gameWon = false;
+            clearInterval(timerInterval);
+            startTime = null;
+            timerDisplay.textContent = '0';
+            
+            let size;
+            switch(difficulty) {
+                case 'easy': size = 10; break;
+                case 'hard': size = 20; break;
+                case 'insane': size = 30; break;
+            }
+            mazeSize = size;
+            generateMaze(size);
+            drawMaze();
+        }
+
+        function setDifficulty(level) {
+            difficulty = level;
+            
+            // Update active button
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            document.querySelector(`.${level}-btn`).classList.add('active');
+            
+            resetGame();
         }
 
-        function checkAnswer(index, clickedBtn) {
-            const quiz = quizData[currentQuiz];
-            const allBtns = quizOptions.querySelectorAll('.quiz-btn');
-
-            allBtns.forEach(b => b.disabled = true);
-
-            if (index === quiz.correct) {
-                clickedBtn.classList.add('correct');
-                quizResult.textContent = "Tama! Alam mo yan eh! 😍💖";
-                quizResult.style.color = '#b33c5a';
-                for (let i = 0; i < 8; i++) setTimeout(createFloatingHeart, i * 60);
-            } else {
-                clickedBtn.classList.add('wrong');
-                allBtns[quiz.correct].classList.add('correct');
-                quizResult.textContent = "HMP! Alam mong ikaw yung sagot eh! 🙄💕";
-                quizResult.style.color = '#d94f70';
-            }
-
-            quizResult.style.display = 'block';
-            quizResult.style.animation = 'none';
-            quizResult.offsetHeight;
-            quizResult.style.animation = 'bounceIn 0.6s';
-
-            // Next quiz after delay
-            setTimeout(() => {
-                currentQuiz = (currentQuiz + 1) % quizData.length;
-                loadQuiz();
-            }, 2000);
-        }
-        loadQuiz();
-
-        // --- I LOVE YOU MORE COUNTER ---
-        const ilyCount = document.getElementById('ilyCount');
-        const ilyMinus = document.getElementById('ilyMinus');
-        const ilyPlus = document.getElementById('ilyPlus');
-        let ilyValue = parseInt(localStorage.getItem('ilyCounter') || '1');
-
-        ilyCount.textContent = ilyValue;
-
-        function updateILY(change) {
-            ilyValue = Math.max(1, ilyValue + change);
-            ilyCount.textContent = ilyValue;
-            localStorage.setItem('ilyCounter', ilyValue);
-            ilyCount.style.animation = 'none';
-            ilyCount.offsetHeight;
-            ilyCount.style.animation = 'bounceIn 0.4s';
-            for (let i = 0; i < 4; i++) setTimeout(createFloatingHeart, i * 50);
+        function closeModal() {
+            document.getElementById('winModal').style.display = 'none';
+            resetGame();
         }
 
-        ilyPlus.addEventListener('click', () => updateILY(1));
-        ilyMinus.addEventListener('click', () => updateILY(-1));
-
-        // --- RANDOM COMPLIMENT GENERATOR ---
-        const complimentBox = document.getElementById('complimentBox');
-        const complimentText = document.getElementById('complimentText');
-        const compliments = [
-            "You're the sunshine in my rainy days! ☀️💖",
-            "Grabe, ang pogi/ganda mo lalo today! 😍✨",
-            "You make my heart do the cha-cha! 💃💕",
-            "Ikaw na talaga ang the best! 🏆💘",
-            "Ang swerte ko sayo, sobra! 🍀💗",
-            "You're my happy pill! 💊💖",
-            "Walang katulad ang smile mo! 😊✨",
-            "You're my answered prayer! 🙏💕",
-            "Kinikilig ako sayo palagi! 🦋💓",
-            "You're my person, my home! 🏠💞"
-        ];
-
-        complimentBox.addEventListener('click', () => {
-            const random = compliments[Math.floor(Math.random() * compliments.length)];
-            complimentText.textContent = random;
-            complimentText.style.animation = 'none';
-            complimentText.offsetHeight;
-            complimentText.style.animation = 'bounceIn 0.5s';
-            for (let i = 0; i < 5; i++) setTimeout(createFloatingHeart, i * 60);
-        });
-
-        // --- SURPRISE BUTTON ---
-        const revealBtn = document.getElementById('revealButton');
-        const specialMessageDiv = document.getElementById('specialMessage');
-
-        revealBtn.addEventListener('click', function() {
-            if (specialMessageDiv.style.display === 'none' || !specialMessageDiv.style.display) {
-                specialMessageDiv.style.display = 'flex';
-                revealBtn.innerHTML = '<i class="fas fa-heart"></i> Kilig! <i class="fas fa-heart"></i>';
-                specialMessageDiv.style.animation = 'none';
-                specialMessageDiv.offsetHeight;
-                specialMessageDiv.style.animation = 'bounceIn 0.6s';
-                for (let i = 0; i < 10; i++) setTimeout(createFloatingHeart, i * 60);
-            } else {
-                specialMessageDiv.style.display = 'none';
-                revealBtn.innerHTML = '<i class="fas fa-gift"></i> Open Your Surprise <i class="fas fa-gift"></i>';
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    e.preventDefault();
+                    movePlayer('up');
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    e.preventDefault();
+                    movePlayer('down');
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    e.preventDefault();
+                    movePlayer('left');
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    e.preventDefault();
+                    movePlayer('right');
+                    break;
             }
         });
 
-        // --- TOUCH FEEDBACK ---
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.94)';
-            }, {passive: true});
-            btn.addEventListener('touchend', function() {
-                this.style.transform = '';
-            }, {passive: true});
-        });
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            @keyframes shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+        `;
+        document.head.appendChild(style);
 
-    })();
-</script>
+        // Initialize game
+        generateMaze(10);
+        drawMaze();
+    </script>
 </body>
 </html>
