@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.5">
-    <title>5th Monthsary Surprise 💖 | Interactive Love Letter</title>
+    <title>5th Monthsary Surprise 💖 | Pabebe Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -13,13 +13,11 @@
         }
 
         :root {
-            --primary: #d94f70;
-            --primary-dark: #b33154;
+            --pink: #ff9eb5;
+            --dark-pink: #d94f70;
             --bg-start: #2d1b3a;
             --bg-end: #1a1025;
-            --card-bg: rgba(255, 240, 245, 0.95);
-            --text-dark: #3e232b;
-            --golden: #f4c2c2;
+            --card-bg: rgba(255, 240, 245, 0.97);
         }
 
         body {
@@ -30,19 +28,15 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            margin: 0;
-            position: relative;
             overflow-x: hidden;
-            transition: background 0.5s ease;
+            position: relative;
         }
 
-        /* floating hearts */
+        /* Floating hearts background */
         .hearts-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
@@ -50,24 +44,36 @@
 
         .heart-float {
             position: absolute;
-            color: rgba(255, 180, 200, 0.25);
+            color: rgba(255, 180, 200, 0.3);
             font-size: 2rem;
             animation: floatHeart 7s infinite ease-in-out;
             bottom: -50px;
             opacity: 0;
-            will-change: transform, opacity;
         }
 
         @keyframes floatHeart {
             0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.4; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
             100% { transform: translateY(-110vh) rotate(40deg) scale(1.2); opacity: 0; }
         }
 
-        @keyframes gentlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .surprise-card {
@@ -75,20 +81,17 @@
             z-index: 10;
             max-width: 750px;
             width: 100%;
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            background: linear-gradient(135deg, rgba(255, 240, 245, 0.97) 0%, rgba(255, 220, 230, 0.93) 100%);
-            border-radius: clamp(1.5rem, 6vw, 3.5rem) clamp(1.5rem, 6vw, 3.5rem) clamp(1.5rem, 6vw, 3rem) clamp(1.5rem, 6vw, 3rem);
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 200, 210, 0.5), 0 0 30px rgba(255, 120, 160, 0.7);
+            background: linear-gradient(135deg, rgba(255, 240, 245, 0.97) 0%, rgba(255, 220, 230, 0.95) 100%);
+            border-radius: clamp(1.5rem, 6vw, 3.5rem);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(255, 200, 210, 0.6), 0 0 40px rgba(255, 120, 160, 0.7);
             padding: clamp(1.8rem, 5vw, 2.8rem) clamp(1.2rem, 4vw, 2.2rem);
             text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.7);
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            animation: gentlePulse 4s infinite ease-in-out;
         }
 
         .monthsary-badge {
-            background: #c44b6c;
+            background: linear-gradient(120deg, #d94f70, #b33154);
             color: #fff0f3;
             display: inline-block;
             padding: 0.6rem 2rem;
@@ -99,241 +102,217 @@
             text-transform: uppercase;
             margin-bottom: 1.5rem;
             box-shadow: 0 6px 14px rgba(180, 60, 90, 0.6);
-            background: linear-gradient(120deg, #d94f70, #b33154);
-            backdrop-filter: blur(4px);
+            animation: wiggle 2s infinite;
         }
 
         h1 {
             font-family: 'Playfair Display', 'Times New Roman', serif;
-            font-size: clamp(2.2rem, 8vw, 3.5rem);
+            font-size: clamp(2rem, 7vw, 3.2rem);
             font-weight: 700;
             color: #4a1e2f;
             text-shadow: 2px 2px 0 rgba(255, 220, 220, 0.8);
-            margin-bottom: 0.3rem;
-            line-height: 1.2;
-            letter-spacing: 1px;
-            word-break: break-word;
+            margin-bottom: 0.6rem;
         }
 
-        .subtitle {
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
-            color: #b33c5a;
+        .nickname-display {
+            color: #d94f70;
             font-style: italic;
-            margin-bottom: 1.8rem;
-            font-weight: 400;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            margin-bottom: 0.5rem;
+            animation: sparkle 2s infinite;
+        }
+
+        .message-box {
+            background: rgba(255, 250, 252, 0.9);
+            border-radius: 2rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
+            margin: 1.2rem 0;
+            border: 2px dashed #ffb7c9;
+            box-shadow: 0 8px 20px rgba(180, 50, 70, 0.2);
+        }
+
+        .typewriter-text {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: #5c2e3b;
+            line-height: 1.6;
+            min-height: 60px;
+            font-weight: 500;
+        }
+
+        .cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #d94f70;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Love quiz section */
+        .quiz-section {
+            background: #fff5f8;
+            border-radius: 2rem;
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            border: 1px solid #ffccd5;
+        }
+
+        .quiz-question {
+            font-weight: 600;
+            color: #b33c5a;
+            margin-bottom: 0.8rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+        }
+
+        .quiz-btn {
+            background: white;
+            border: 2px solid #ffb7c9;
+            padding: 0.7rem 1.2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #d94f70;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            flex: 1 1 auto;
+            min-width: 100px;
+            touch-action: manipulation;
+        }
+
+        .quiz-btn:hover {
+            background: #ffd9e5;
+            transform: scale(1.05);
+        }
+        .quiz-btn.correct {
+            background: #ff9eb5;
+            color: white;
+            animation: bounceIn 0.6s;
+        }
+        .quiz-btn.wrong {
+            background: #ddd;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .quiz-result {
+            margin-top: 0.8rem;
+            font-weight: bold;
+            color: #b33c5a;
+            display: none;
+            animation: bounceIn 0.6s;
+        }
+
+        /* ILY More counter */
+        .ily-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .ily-btn {
+            background: #ffeaf1;
+            border: none;
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #d94f70;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+
+        .ily-btn:active {
+            transform: scale(0.9);
+            background: #ffccd5;
+        }
+
+        .ily-display {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            color: #b33c5a;
+            min-width: 120px;
+        }
+
+        /* Compliment generator */
+        .compliment-box {
+            background: linear-gradient(135deg, #fff0f3, #ffe4e9);
+            border-radius: 2rem;
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: #b33c5a;
+            font-weight: 600;
+            min-height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             flex-wrap: wrap;
-        }
-
-        .message-box {
-            background: rgba(255, 250, 252, 0.8);
-            border-radius: 2.5rem;
-            padding: clamp(1.2rem, 4vw, 1.8rem) clamp(1rem, 3vw, 1.5rem);
-            margin: 1.5rem 0;
-            box-shadow: inset 0 0 15px rgba(255, 190, 200, 0.5), 0 12px 18px rgba(120, 40, 60, 0.3);
-            border: 1px solid #ffd9e5;
-        }
-
-        .love-note {
-            font-size: clamp(1rem, 3vw, 1.25rem);
-            color: var(--text-dark);
-            font-weight: 500;
-            line-height: 1.7;
-            font-family: 'Segoe UI', 'Georgia', serif;
-        }
-
-        /* Gallery with real images */
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(0.8rem, 3vw, 1.3rem);
-            margin: 2rem 0 1.5rem;
-        }
-
-        .polaroid {
-            background: #fffbfc;
-            padding: 0.7rem 0.7rem 1.8rem;
-            border-radius: 0.7rem 0.7rem 1.2rem 1.2rem;
-            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
-            transform: rotate(-2deg);
-            transition: all 0.3s ease;
-            max-width: 150px;
-            flex: 1 1 120px;
-            border: 1px solid #fbc1d0;
+            animation: bounceIn 0.5s;
             cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #ffccd5;
+            user-select: none;
         }
 
-        .polaroid:nth-child(2) { transform: rotate(3deg); }
-        .polaroid:nth-child(3) { transform: rotate(-1.5deg); }
-
-        .polaroid:hover {
-            transform: scale(1.05) rotate(0deg) !important;
-            box-shadow: 0 18px 25px rgba(160, 50, 70, 0.6);
-            z-index: 5;
-        }
-
-        .polaroid-img {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background: linear-gradient(45deg, #f9cedb, #f7bac9);
-            border-radius: 0.4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.6rem;
-            color: white;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 0.3rem;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .polaroid-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .caption {
-            font-size: 0.75rem;
-            color: #5c2e3b;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .counter-section {
-            background: #ffeaf1;
-            border-radius: 3rem;
-            padding: 1rem 1.8rem;
-            margin: 1.5rem 0 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(1rem, 4vw, 1.8rem);
-            font-weight: 600;
-            color: #491f2b;
-            border: 1px dashed #d9647c;
-        }
-
-        .counter-number {
-            font-size: clamp(1.5rem, 5vw, 2rem);
-            font-weight: 800;
-            color: #b83554;
+        .compliment-box:active {
+            transform: scale(0.97);
         }
 
         .surprise-btn {
-            background: #d94f70;
+            background: linear-gradient(180deg, #e8617c 0%, #be3b58 100%);
             border: none;
             color: white;
             font-weight: bold;
-            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            font-size: clamp(1rem, 3vw, 1.3rem);
             padding: 1rem 2.5rem;
             border-radius: 3rem;
             margin-top: 1rem;
             cursor: pointer;
-            box-shadow: 0 7px 0 #872c44, 0 10px 18px rgba(160, 30, 60, 0.5);
-            transition: all 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
+            box-shadow: 0 7px 0 #872c44, 0 10px 18px rgba(160, 30, 60, 0.4);
+            transition: all 0.15s;
             letter-spacing: 1px;
-            background: linear-gradient(180deg, #e8617c 0%, #be3b58 100%);
             border: 1px solid #ffb2c4;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
+            animation: wiggle 3s infinite;
             touch-action: manipulation;
         }
 
         .surprise-btn:active {
             transform: translateY(4px);
-            box-shadow: 0 3px 0 #631f32, 0 8px 14px rgba(140, 30, 50, 0.6);
+            box-shadow: 0 3px 0 #631f32;
         }
 
         .hidden-message {
-            margin-top: 1.8rem;
+            margin-top: 1.5rem;
             background: #fff0f3;
             border-radius: 2rem;
             padding: 1.2rem;
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             color: #ad2e4c;
             font-weight: 600;
             border: 2px solid #ffb7c9;
-            animation: fadeGlow 1.3s ease;
+            animation: bounceIn 0.6s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             flex-wrap: wrap;
-            background: rgba(255, 235, 240, 0.95);
-        }
-
-        @keyframes fadeGlow {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* Music Player Toggle */
-        .music-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background: rgba(255, 240, 245, 0.8);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            color: #d94f70;
-            backdrop-filter: blur(10px);
-            transition: transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .music-toggle:active { transform: scale(0.95); }
-        .music-toggle.playing { animation: musicPulse 1.5s infinite; }
-        @keyframes musicPulse { 0%, 100% { box-shadow: 0 0 5px #d94f70; } 50% { box-shadow: 0 0 20px #ff9eb5; } }
-
-        /* Image modal */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .lightbox img {
-            max-width: 90%;
-            max-height: 80vh;
-            border-radius: 20px;
-            box-shadow: 0 0 40px rgba(255,150,180,0.5);
-        }
-        .lightbox .close-lightbox {
-            position: absolute;
-            top: 20px; right: 30px;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
         }
 
         footer {
@@ -342,99 +321,89 @@
             font-size: clamp(0.7rem, 2vw, 0.8rem);
         }
 
-        .image-upload-area {
-            margin: 1rem 0;
+        .nickname-input-area {
             display: flex;
-            flex-wrap: wrap;
             gap: 0.5rem;
             justify-content: center;
-            align-items: center;
+            flex-wrap: wrap;
+            margin: 0.8rem 0;
         }
 
-        .upload-label {
-            background: #ffeaf1;
-            padding: 0.5rem 1rem;
+        .nickname-input {
+            padding: 0.6rem 1rem;
             border-radius: 2rem;
-            font-size: 0.8rem;
-            cursor: pointer;
-            color: #b33c5a;
-            border: 1px dashed #d9647c;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.2rem;
+            border: 2px solid #ffb7c9;
+            font-size: 0.9rem;
+            text-align: center;
+            outline: none;
+            background: #fffbfc;
+            color: #5c2e3b;
+            font-weight: 500;
+            flex: 1 1 150px;
+            max-width: 200px;
         }
-        .upload-label:hover { background: #ffd9e5; }
-        #imageUpload { display: none; }
+
+        .save-nickname-btn {
+            background: #ffb7c9;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            background: #d94f70;
+            touch-action: manipulation;
+        }
     </style>
 </head>
 <body>
 
 <div class="hearts-bg" id="heartsContainer"></div>
 
-<!-- Hidden audio -->
-<audio id="bgMusic" loop preload="auto">
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<button class="music-toggle" id="musicToggle" title="Play Music">
-    <i class="fas fa-music"></i>
-</button>
-
 <main class="surprise-card">
     <div class="monthsary-badge">
-        <i class="fas fa-calendar-alt"></i> 5th Monthsary
+        <i class="fas fa-calendar-alt"></i> 5th Monthsary <i class="fas fa-heart"></i>
     </div>
+
     <h1>My Dearest</h1>
-    <div class="subtitle">
-        <i class="fas fa-heart"></i> 5 months of us <i class="fas fa-heart"></i>
+    <div class="nickname-display" id="nicknameDisplay">
+        <i class="fas fa-sparkles"></i> baby <i class="fas fa-sparkles"></i>
     </div>
 
+    <!-- Set nickname -->
+    <div class="nickname-input-area">
+        <input type="text" class="nickname-input" id="nicknameInput" placeholder="Tawag mo sakin? 🥺" maxlength="20">
+        <button class="save-nickname-btn" id="saveNicknameBtn">
+            <i class="fas fa-heart"></i> Set
+        </button>
+    </div>
+
+    <!-- Typewriter love letter -->
     <div class="message-box">
-        <p class="love-note">
-            <i class="fas fa-quote-left"></i> Five months ago, you walked into my life and painted it with colors I never knew existed. Every moment with you is my favorite melody. Thank you for being my happiness, my calm, and my greatest adventure. Here's to forever, starting with today. <i class="fas fa-quote-right"></i>
-        </p>
+        <p class="typewriter-text cursor" id="typewriterText"></p>
     </div>
 
-    <!-- Image upload for personalization -->
-    <div class="image-upload-area">
-        <label for="imageUpload" class="upload-label">
-            <i class="fas fa-camera"></i> Add Your Photos
-        </label>
-        <input type="file" id="imageUpload" accept="image/*" multiple>
-        <span style="font-size:0.7rem; color:#864455;">Click polaroids to view</span>
+    <!-- Pabebe love quiz -->
+    <div class="quiz-section">
+        <p class="quiz-question" id="quizQuestion">Sino pinaka pogi/maganda sa mundo? 🤔</p>
+        <div class="quiz-options" id="quizOptions"></div>
+        <p class="quiz-result" id="quizResult"></p>
     </div>
 
-    <div class="gallery" id="galleryContainer">
-        <div class="polaroid" data-index="0">
-            <div class="polaroid-img" style="background-image: linear-gradient(135deg, #f9a8c0, #e6738f);">
-                <i class="fas fa-mug-hot"></i>
-            </div>
-            <div class="caption">first coffee</div>
+    <!-- I love you more counter -->
+    <div class="ily-counter">
+        <button class="ily-btn" id="ilyMinus"><i class="fas fa-minus"></i></button>
+        <div class="ily-display">
+            <span id="ilyCount">1</span>x I love you more! 💕
         </div>
-        <div class="polaroid" data-index="1">
-            <div class="polaroid-img" style="background-image: linear-gradient(135deg, #fbbfca, #e2889b);">
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="caption">stargazing</div>
-        </div>
-        <div class="polaroid" data-index="2">
-            <div class="polaroid-img" style="background-image: linear-gradient(135deg, #fdced6, #d96c83);">
-                <i class="fas fa-music"></i>
-            </div>
-            <div class="caption">our song</div>
-        </div>
+        <button class="ily-btn" id="ilyPlus"><i class="fas fa-plus"></i></button>
     </div>
 
-    <div class="counter-section">
-        <div class="counter-item">
-            <span class="counter-number" id="daysCount">150</span>
-            <span><i class="far fa-clock"></i> days together</span>
-        </div>
-        <div class="counter-item">
-            <span class="counter-number"><i class="fas fa-infinity"></i></span>
-            <span>memories</span>
-        </div>
+    <!-- Random compliment -->
+    <div class="compliment-box" id="complimentBox">
+        <i class="fas fa-sparkles"></i> 
+        <span id="complimentText">Click me for kilig! 💖</span>
+        <i class="fas fa-sparkles"></i>
     </div>
 
     <button class="surprise-btn" id="revealButton">
@@ -452,12 +421,6 @@
     </footer>
 </main>
 
-<!-- Lightbox for images -->
-<div class="lightbox" id="lightbox">
-    <span class="close-lightbox" id="closeLightbox">&times;</span>
-    <img src="" alt="Memory" id="lightboxImg">
-</div>
-
 <script>
     (function() {
         // --- FLOATING HEARTS ---
@@ -465,91 +428,190 @@
         function createFloatingHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart-float';
-            const icons = ['fa-heart', 'fa-heart', 'fa-heart', 'fa-kiss-wink-heart', 'fa-heartbeat'];
+            const icons = ['fa-heart', 'fa-heart', 'fa-heart', 'fa-kiss-wink-heart', 'fa-heartbeat', 'fa-grin-hearts'];
             heart.innerHTML = `<i class="fas ${icons[Math.floor(Math.random() * icons.length)]}"></i>`;
             heart.style.left = `${Math.random() * 100}%`;
             heart.style.fontSize = `${1.2 + Math.random() * 2.2}rem`;
-            heart.style.animationDuration = `${5 + Math.random() * 9}s`;
+            heart.style.animationDuration = `${5 + Math.random() * 10}s`;
             heart.style.animationDelay = `${Math.random() * 5}s`;
             heartsContainer.appendChild(heart);
-            setTimeout(() => { if (heart.parentNode) heart.remove(); }, 15000);
+            setTimeout(() => { if (heart.parentNode) heart.remove(); }, 16000);
         }
+        for (let i = 0; i < 20; i++) setTimeout(createFloatingHeart, i * 150);
+        setInterval(createFloatingHeart, 800);
 
-        for (let i = 0; i < 18; i++) setTimeout(createFloatingHeart, i * 200);
-        setInterval(createFloatingHeart, 900);
+        // --- NICKNAME SYSTEM ---
+        const nicknameDisplay = document.getElementById('nicknameDisplay');
+        const nicknameInput = document.getElementById('nicknameInput');
+        const saveNicknameBtn = document.getElementById('saveNicknameBtn');
 
-        // --- DYNAMIC DAYS COUNTER ---
-        function updateDaysCounter() {
-            const now = new Date();
-            const startDate = new Date(now);
-            startDate.setMonth(now.getMonth() - 5);
-            const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-            document.getElementById('daysCount').textContent = diffDays;
-        }
-        updateDaysCounter();
-
-        // --- MUSIC PLAYER ---
-        const bgMusic = document.getElementById('bgMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        let isPlaying = false;
-
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicToggle.innerHTML = '<i class="fas fa-music"></i>';
-                musicToggle.classList.remove('playing');
-            } else {
-                bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
-                musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-                musicToggle.classList.add('playing');
+        saveNicknameBtn.addEventListener('click', () => {
+            const name = nicknameInput.value.trim();
+            if (name) {
+                nicknameDisplay.innerHTML = `<i class="fas fa-sparkles"></i> ${name} <i class="fas fa-sparkles"></i>`;
+                localStorage.setItem('babyNickname', name);
+                // Hearts burst
+                for (let i = 0; i < 6; i++) setTimeout(createFloatingHeart, i * 60);
             }
-            isPlaying = !isPlaying;
         });
 
-        // --- IMAGE UPLOAD ---
-        const imageUpload = document.getElementById('imageUpload');
-        const galleryContainer = document.getElementById('galleryContainer');
-        const polaroids = document.querySelectorAll('.polaroid');
-        let uploadedImages = [];
+        // Load saved nickname
+        const savedName = localStorage.getItem('babyNickname');
+        if (savedName) {
+            nicknameDisplay.innerHTML = `<i class="fas fa-sparkles"></i> ${savedName} <i class="fas fa-sparkles"></i>`;
+        }
 
-        imageUpload.addEventListener('change', function(e) {
-            const files = Array.from(e.target.files);
-            files.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    uploadedImages.push(event.target.result);
-                    // Replace polaroid images sequentially
-                    if (index < polaroids.length) {
-                        const polaroidImg = polaroids[index].querySelector('.polaroid-img');
-                        polaroidImg.innerHTML = `<img src="${event.target.result}" alt="Memory">`;
-                        polaroidImg.style.backgroundImage = 'none';
-                    }
-                };
-                reader.readAsDataURL(file);
+        // --- TYPEWRITER EFFECT ---
+        const typewriterText = document.getElementById('typewriterText');
+        const loveMessages = [
+            "Five months ago, you walked into my life and painted it with colors I never knew existed... 💕",
+            "Every moment with you is my favorite melody, my happy pill, my everything... 🎵",
+            "Thank you for being my happiness, my calm, and my greatest adventure... ✨",
+            "You're the reason I smile for no reason. Charot! Pero true... 🥺💖",
+            "Here's to forever, starting with today. I love you so much! 💍"
+        ];
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            const currentMsg = loveMessages[messageIndex];
+            if (isDeleting) {
+                typewriterText.textContent = currentMsg.substring(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % loveMessages.length;
+                    setTimeout(typeEffect, 500);
+                    return;
+                }
+            } else {
+                typewriterText.textContent = currentMsg.substring(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === currentMsg.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 2000);
+                    return;
+                }
+            }
+            setTimeout(typeEffect, isDeleting ? 30 : 60);
+        }
+        typeEffect();
+
+        // --- LOVE QUIZ ---
+        const quizQuestion = document.getElementById('quizQuestion');
+        const quizOptions = document.getElementById('quizOptions');
+        const quizResult = document.getElementById('quizResult');
+
+        const quizData = [
+            {
+                question: "Sino pinaka pogi/maganda sa mundo? 🤔",
+                options: ["Ikaw syempre! 😍", "Si crush...jk", "Si Mama", "Ewan ko 🤷"],
+                correct: 0
+            },
+            {
+                question: "Mahal mo ba ko? 🥺",
+                options: ["Oo naman! 💖", "Medyo lang", "Depende sa mood", "Secret 🤫"],
+                correct: 0
+            },
+            {
+                question: "Sino nagmamay-ari ng puso mo? 💘",
+                options: ["Ikaw lang!", "Si Lord", "Family ko", "Wala pa"],
+                correct: 0
+            }
+        ];
+        let currentQuiz = 0;
+
+        function loadQuiz() {
+            const quiz = quizData[currentQuiz];
+            quizQuestion.textContent = quiz.question;
+            quizOptions.innerHTML = '';
+            quizResult.style.display = 'none';
+
+            quiz.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-btn';
+                btn.textContent = opt;
+                btn.addEventListener('click', () => checkAnswer(index, btn));
+                quizOptions.appendChild(btn);
             });
-        });
+        }
 
-        // --- LIGHTBOX ---
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const closeLightbox = document.getElementById('closeLightbox');
+        function checkAnswer(index, clickedBtn) {
+            const quiz = quizData[currentQuiz];
+            const allBtns = quizOptions.querySelectorAll('.quiz-btn');
 
-        galleryContainer.addEventListener('click', function(e) {
-            const polaroid = e.target.closest('.polaroid');
-            if (!polaroid) return;
-            const imgElement = polaroid.querySelector('img');
-            if (imgElement) {
-                lightboxImg.src = imgElement.src;
-                lightbox.style.display = 'flex';
+            allBtns.forEach(b => b.disabled = true);
+
+            if (index === quiz.correct) {
+                clickedBtn.classList.add('correct');
+                quizResult.textContent = "Tama! Alam mo yan eh! 😍💖";
+                quizResult.style.color = '#b33c5a';
+                for (let i = 0; i < 8; i++) setTimeout(createFloatingHeart, i * 60);
             } else {
-                // Fallback: show icon as text
-                alert('Add a photo first by clicking "Add Your Photos" above! 📸');
+                clickedBtn.classList.add('wrong');
+                allBtns[quiz.correct].classList.add('correct');
+                quizResult.textContent = "HMP! Alam mong ikaw yung sagot eh! 🙄💕";
+                quizResult.style.color = '#d94f70';
             }
-        });
 
-        closeLightbox.addEventListener('click', () => lightbox.style.display = 'none');
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) lightbox.style.display = 'none';
+            quizResult.style.display = 'block';
+            quizResult.style.animation = 'none';
+            quizResult.offsetHeight;
+            quizResult.style.animation = 'bounceIn 0.6s';
+
+            // Next quiz after delay
+            setTimeout(() => {
+                currentQuiz = (currentQuiz + 1) % quizData.length;
+                loadQuiz();
+            }, 2000);
+        }
+        loadQuiz();
+
+        // --- I LOVE YOU MORE COUNTER ---
+        const ilyCount = document.getElementById('ilyCount');
+        const ilyMinus = document.getElementById('ilyMinus');
+        const ilyPlus = document.getElementById('ilyPlus');
+        let ilyValue = parseInt(localStorage.getItem('ilyCounter') || '1');
+
+        ilyCount.textContent = ilyValue;
+
+        function updateILY(change) {
+            ilyValue = Math.max(1, ilyValue + change);
+            ilyCount.textContent = ilyValue;
+            localStorage.setItem('ilyCounter', ilyValue);
+            ilyCount.style.animation = 'none';
+            ilyCount.offsetHeight;
+            ilyCount.style.animation = 'bounceIn 0.4s';
+            for (let i = 0; i < 4; i++) setTimeout(createFloatingHeart, i * 50);
+        }
+
+        ilyPlus.addEventListener('click', () => updateILY(1));
+        ilyMinus.addEventListener('click', () => updateILY(-1));
+
+        // --- RANDOM COMPLIMENT GENERATOR ---
+        const complimentBox = document.getElementById('complimentBox');
+        const complimentText = document.getElementById('complimentText');
+        const compliments = [
+            "You're the sunshine in my rainy days! ☀️💖",
+            "Grabe, ang pogi/ganda mo lalo today! 😍✨",
+            "You make my heart do the cha-cha! 💃💕",
+            "Ikaw na talaga ang the best! 🏆💘",
+            "Ang swerte ko sayo, sobra! 🍀💗",
+            "You're my happy pill! 💊💖",
+            "Walang katulad ang smile mo! 😊✨",
+            "You're my answered prayer! 🙏💕",
+            "Kinikilig ako sayo palagi! 🦋💓",
+            "You're my person, my home! 🏠💞"
+        ];
+
+        complimentBox.addEventListener('click', () => {
+            const random = compliments[Math.floor(Math.random() * compliments.length)];
+            complimentText.textContent = random;
+            complimentText.style.animation = 'none';
+            complimentText.offsetHeight;
+            complimentText.style.animation = 'bounceIn 0.5s';
+            for (let i = 0; i < 5; i++) setTimeout(createFloatingHeart, i * 60);
         });
 
         // --- SURPRISE BUTTON ---
@@ -559,30 +621,23 @@
         revealBtn.addEventListener('click', function() {
             if (specialMessageDiv.style.display === 'none' || !specialMessageDiv.style.display) {
                 specialMessageDiv.style.display = 'flex';
-                revealBtn.innerHTML = '<i class="fas fa-heart"></i> Surprise! <i class="fas fa-heart"></i>';
+                revealBtn.innerHTML = '<i class="fas fa-heart"></i> Kilig! <i class="fas fa-heart"></i>';
                 specialMessageDiv.style.animation = 'none';
                 specialMessageDiv.offsetHeight;
-                specialMessageDiv.style.animation = 'fadeGlow 1.2s ease';
-                for (let i = 0; i < 8; i++) setTimeout(createFloatingHeart, i * 70);
+                specialMessageDiv.style.animation = 'bounceIn 0.6s';
+                for (let i = 0; i < 10; i++) setTimeout(createFloatingHeart, i * 60);
             } else {
                 specialMessageDiv.style.display = 'none';
                 revealBtn.innerHTML = '<i class="fas fa-gift"></i> Open Your Surprise <i class="fas fa-gift"></i>';
             }
         });
 
-        // --- POLAROID CLICK HEARTS ---
-        polaroids.forEach(p => {
-            p.addEventListener('click', () => {
-                for (let i = 0; i < 3; i++) setTimeout(createFloatingHeart, i * 50);
-            });
-        });
-
-        // --- TOUCH EVENTS FOR MOBILE RESPONSIVENESS ---
-        document.querySelectorAll('.surprise-btn, .polaroid, .upload-label').forEach(el => {
-            el.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.96)';
+        // --- TOUCH FEEDBACK ---
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.94)';
             }, {passive: true});
-            el.addEventListener('touchend', function() {
+            btn.addEventListener('touchend', function() {
                 this.style.transform = '';
             }, {passive: true});
         });
